@@ -1,7 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 
+@RoutePage()
 class EmailVerifyView extends StatefulWidget {
   const EmailVerifyView({Key? key}) : super(key: key);
 
@@ -10,11 +12,16 @@ class EmailVerifyView extends StatefulWidget {
 }
 
 class _EmailVerifyViewState extends State<EmailVerifyView> {
-  late final ctrl = EmailVerificationController(FirebaseAuth.instance)
-    ..addListener(() {
-      // trigger widget rebuild to reflect new state
-      setState(() {});
-    });
+  late final ctrl;
+
+  @override
+  void initState() {
+    super.initState();
+    ctrl = EmailVerificationController(FirebaseAuth.instance)
+      ..addListener(() {
+        setState(() {});
+      });
+  }
 
   @override
   void dispose() {
@@ -44,18 +51,18 @@ Widget _bodyWidget(BuildContext context, EmailVerificationController ctrl) {
           ctrl.sendVerificationEmail(
               Theme.of(context).platform, actionCodeSettings);
         },
-        child: Text('Send verification email'),
+        child: const Text('Send verification email'),
       );
     case EmailVerificationState.dismissed:
-      return Text("Ok, let's verify your email next time");
+      return const Text("Ok, let's verify your email next time");
     case EmailVerificationState.pending:
     case EmailVerificationState.sending:
-      return CircularProgressIndicator();
+      return const CircularProgressIndicator();
     case EmailVerificationState.sent:
-      return Text('Check your email');
+      return const Text('Check your email');
     case EmailVerificationState.verified:
-      return Text('Email verified');
+      return const Text('Email verified');
     case EmailVerificationState.failed:
-      return Text('Failed to verify email');
+      return const Text('Failed to verify email');
   }
 }

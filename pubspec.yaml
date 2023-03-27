@@ -28,12 +28,14 @@ dependencies:
   equatable: ^2.0.5
   json_serializable: ^6.6.1
   json_annotation: ^4.8.0
-
+  shared_preferences: ^2.0.20
 
   # Utility
   animated_text_kit: ^4.2.2
   get_it: ^7.2.0
   auto_route: ^6.0.3
+  bot_toast: ^4.0.3
+  flutter_svg: ^1.1.6
 
 dev_dependencies:
   flutter_test:
@@ -47,6 +49,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/svg/
   # example:
   # fonts:
   #   - family: Schyler

@@ -1,7 +1,8 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_social_media_app_ally/core/constants/color_constants.dart';
-import 'package:flutter_social_media_app_ally/feature/auth/login/login_view.dart';
+import 'package:flutter_social_media_app_ally/core/manager/authentication_manager.dart';
 import 'package:flutter_social_media_app_ally/product/initialize/app_start_init.dart';
 import 'package:flutter_social_media_app_ally/product/navigator/app_router.dart';
 import 'package:flutter_social_media_app_ally/product/navigator/app_router.gr.dart';
@@ -25,7 +26,12 @@ class _SplashViewState extends State<SplashView> {
   Future<void> initialize() async {
     await Future.delayed(const Duration(milliseconds: 500));
     if (!mounted) return;
-    getIt<AppRouter>().replace(const LoginRoute());
+    if (FirebaseAuth.instance.currentUser == null ||
+        !AuthenticationManager.instance.checkLoginStatus()) {
+      getIt<AppRouter>().replace(const LoginRoute());
+    } else {
+      getIt<AppRouter>().replace(const HomeRoute());
+    }
   }
 
   @override
