@@ -7,6 +7,7 @@ import 'package:flutter_social_media_app_ally/core/utility/theme/firebase/fireba
 import 'package:flutter_social_media_app_ally/feature/home/model/story_model.dart';
 
 import '../../core/utility/enum/firebase_collections.dart';
+import 'model/posts_model.dart';
 import 'model/weeklypicks_model.dart';
 
 class HomeNotifier extends StateNotifier<HomeState> {
@@ -24,33 +25,43 @@ class HomeNotifier extends StateNotifier<HomeState> {
     state = state.copyWith(weeklyPickList: items);
   }
 
+  Future<void> getPosts() async {
+    var items = await FirebaseUtility()
+        .fetchList<Posts>(FirebaseCollections.posts.reference, const Posts());
+    state = state.copyWith(postList: items);
+  }
+
   Future<void> fetchAndLoad() async {
     state = state.copyWith(isLoading: true);
-    await Future.wait([getStories(), getWeeklyPicks()]);
+    await Future.wait([getStories(), getWeeklyPicks(), getPosts()]);
     state = state.copyWith(isLoading: false);
   }
 }
 
 @immutable
 class HomeState extends Equatable {
+  final List<Posts>? postList;
   final List<StoryModel>? storyList;
   final List<WeeklyPicks>? weeklyPickList;
   final bool isLoading;
   const HomeState({
+    this.postList,
     this.storyList,
     this.weeklyPickList,
     this.isLoading = true,
   });
 
   @override
-  List<Object?> get props => [storyList, weeklyPickList, isLoading];
+  List<Object?> get props => [postList, storyList, weeklyPickList, isLoading];
 
   HomeState copyWith({
     List<StoryModel>? storyList,
+    List<Posts>? postList,
     List<WeeklyPicks>? weeklyPickList,
     bool? isLoading,
   }) {
     return HomeState(
+      postList: postList ?? this.postList,
       storyList: storyList ?? this.storyList,
       weeklyPickList: weeklyPickList ?? this.weeklyPickList,
       isLoading: isLoading ?? this.isLoading,

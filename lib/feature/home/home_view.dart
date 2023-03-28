@@ -8,6 +8,7 @@ import 'package:flutter_social_media_app_ally/product/components/widgets/loading
 
 import '../../product/components/safe_widgets/safe_listview.dart';
 import '../../product/components/widgets/cache_network_image.dart';
+import 'components/posts_card_view.dart';
 import 'components/story_card_view.dart';
 import 'components/weeklypicks_card_view.dart';
 
@@ -51,6 +52,7 @@ class HomeViewState extends ConsumerState<HomeView> {
                   const DynamicHeight(),
                   WeeklyPicksCard(homeProvider),
                   const DynamicHeight(),
+                  PostsCard(homeProvider),
                 ],
               ),
               if (ref.watch(homeProvider).isLoading)
