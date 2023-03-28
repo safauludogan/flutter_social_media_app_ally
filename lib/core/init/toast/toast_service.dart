@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_social_media_app_ally/core/extension/context_extension.dart';
 import '../../../product/initialize/app_start_init.dart';
 import '../../../product/navigator/app_router.dart';
-import '../../components/widgets/svg_widget.dart';
+import '../../../product/components/widgets/svg_widget.dart';
 import '../../constants/color_constants.dart';
 import '../../constants/string_constants.dart';
 

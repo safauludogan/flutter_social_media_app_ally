@@ -44,10 +44,3 @@ class _LoginViewState extends ConsumerState<LoginView> {
     ));
   }
 }
-
-
-/* if (!state.user!.emailVerified) {
-        //getIt<AppRouter>().push(const EmailVerifyRoute());
-      } else {
-        //getIt<AppRouter>().replace(const HomeRoute());
-      }*/

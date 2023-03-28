@@ -1,12 +1,18 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_social_media_app_ally/core/constants/string_constants.dart';
 import 'package:flutter_social_media_app_ally/core/extension/context_extension.dart';
 import 'package:flutter_social_media_app_ally/feature/home/home_provider.dart';
+import 'package:flutter_social_media_app_ally/product/components/widgets/loading_view.dart';
 
-import '../../core/components/widgets/cache_network_image.dart';
-import 'model/story_model.dart';
+import '../../product/components/safe_widgets/safe_listview.dart';
+import '../../product/components/widgets/cache_network_image.dart';
+import 'components/story_card_view.dart';
+import 'components/weeklypicks_card_view.dart';
+
+final StateNotifierProvider<HomeNotifier, HomeState> homeProvider =
+    StateNotifierProvider((ref) => HomeNotifier());
 
 @RoutePage()
 class HomeView extends ConsumerStatefulWidget {
@@ -17,49 +23,51 @@ class HomeView extends ConsumerStatefulWidget {
 }
 
 class HomeViewState extends ConsumerState<HomeView> {
-  late final StateNotifierProvider<HomeNotifier, HomeState> homeProvider;
   @override
   void initState() {
     super.initState();
-    homeProvider = StateNotifierProvider((ref) => HomeNotifier());
-    ref.read(homeProvider.notifier).getStories();
+    Future.microtask(() => ref.read(homeProvider.notifier).fetchAndLoad());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+          title: Text(
+        'Welcome Safa,',
+        style:
+            context.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w500),
+      )),
       body: Center(
-        child: FutureBuilder(
-          future: ref.read(homeProvider.notifier).getStories(),
-          builder:
-              (context, AsyncSnapshot<QuerySnapshot<StoryModel?>> snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.none:
-                return const Placeholder();
-              case ConnectionState.waiting:
-              case ConnectionState.active:
-                return const CircularProgressIndicator();
-
-              case ConnectionState.done:
-                if (snapshot.hasData) {
-                  final values =
-                      snapshot.data!.docs.map((e) => e.data()).toList();
-                  return ListView.builder(
-                    itemCount: values.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) => Padding(
-                      padding: const EdgeInsets.only(right: 12.0),
-                      child: NetworkImageView(
-                          image: values[index]!.image.toString()),
-                    ),
-                    shrinkWrap: true,
-                  );
-                }
-                return const Center(child: Text('No Data'));
-            }
-          },
+          child: SafeArea(
+        child: Padding(
+          padding: context.paddingTopLow,
+          child: Stack(
+            children: [
+              ListView(
+                padding: context.paddingNormal,
+                children: [
+                  StoryCard(homeProvider),
+                  const DynamicHeight(),
+                  WeeklyPicksCard(homeProvider),
+                  const DynamicHeight(),
+                ],
+              ),
+              if (ref.watch(homeProvider).isLoading)
+                const Center(child: LoadingView())
+            ],
+          ),
         ),
-      ),
+      )),
     );
+  }
+}
+
+class DynamicHeight extends StatelessWidget {
+  const DynamicHeight({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(height: context.mediumValue);
   }
 }

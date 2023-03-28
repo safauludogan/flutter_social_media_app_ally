@@ -4,8 +4,7 @@ class ColorConstants {
   ColorConstants._();
 
   static const Color blueDark = Color(0xff64D2FF);
-
-
+  static const Color softBlack = Color(0xff333333);
 
   //ToastColor
   static Color toastSuccessGreenColor = const Color(0xffc5f7dd);

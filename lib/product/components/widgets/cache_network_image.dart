@@ -16,7 +16,7 @@ class _NetworkImageViewState extends State<NetworkImageView> {
   bool pageUpdated = false;
   @override
   Widget build(BuildContext context) => CircleAvatar(
-        radius: 36,
+        radius: 32,
         backgroundColor: Colors.grey.shade800,
         backgroundImage: NetworkImage(widget.image),
       );

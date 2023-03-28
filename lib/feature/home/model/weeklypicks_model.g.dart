@@ -1,20 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'story_model.dart';
+part of 'weeklypicks_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-StoryModel _$StoryModelFromJson(Map<String, dynamic> json) => StoryModel(
+WeeklyPicks _$WeeklyPicksFromJson(Map<String, dynamic> json) => WeeklyPicks(
       image: json['image'] as String?,
+      subtitle: json['subtitle'] as String?,
       userId: json['userId'] as String?,
       id: json['id'] as String?,
     );
 
-Map<String, dynamic> _$StoryModelToJson(StoryModel instance) =>
+Map<String, dynamic> _$WeeklyPicksToJson(WeeklyPicks instance) =>
     <String, dynamic>{
       'image': instance.image,
+      'subtitle': instance.subtitle,
       'userId': instance.userId,
       'id': instance.id,
     };

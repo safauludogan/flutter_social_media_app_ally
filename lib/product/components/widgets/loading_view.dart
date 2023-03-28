@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_social_media_app_ally/core/extension/context_extension.dart';
 
-import '../../constants/color_constants.dart';
+import '../../../core/constants/color_constants.dart';
 
 class LoadingView extends StatefulWidget {
   const LoadingView({super.key, this.color, this.size});
