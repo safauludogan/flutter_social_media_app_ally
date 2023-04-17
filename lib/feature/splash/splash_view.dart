@@ -7,7 +7,7 @@ import 'package:flutter_social_media_app_ally/product/initialize/app_start_init.
 import 'package:flutter_social_media_app_ally/product/navigator/app_router.dart';
 import 'package:flutter_social_media_app_ally/product/navigator/app_router.gr.dart';
 
-import '../../product/widgets/image_widget.dart';
+import '../../product/components/widgets/image_widget.dart';
 
 @RoutePage()
 class SplashView extends StatefulWidget {

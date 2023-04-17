@@ -7,4 +7,6 @@ class StringConstants {
   static const info = 'Bilgi';
   static const loginSuccess = 'Giriş Başarılı';
   static const logout = 'Çıkış yapıldı';
+  static const weeklyTitle = "This Week's Picks";
+  static const postTitle = "Posts";
 }
